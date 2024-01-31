@@ -1,0 +1,548 @@
+{
+    "booked": [
+        {
+            "transactionId": "AT240290051000010512401---0006---20240128",
+            "entryReference": "AT240290051000010512401",
+            "bookingDate": "2024-01-28",
+            "valueDate": "2024-01-29",
+            "bookingDateTime": "2024-01-28T00:00:00+00:00",
+            "valueDateTime": "2024-01-29T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "3.29",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240290051000010512401",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "a9c1ccadb5c3feb09fe13ae1942b773b"
+        },
+        {
+            "transactionId": "AT240290051000010512587---0006---20240128",
+            "entryReference": "AT240290051000010512587",
+            "bookingDate": "2024-01-28",
+            "valueDate": "2024-01-29",
+            "bookingDateTime": "2024-01-28T00:00:00+00:00",
+            "valueDateTime": "2024-01-29T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "3.29",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240290051000010512587",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "67d107348481fd9049fba47c3e9068de"
+        },
+        {
+            "transactionId": "AT240280047000010611605---0005---20240127",
+            "entryReference": "AT240280047000010611605",
+            "bookingDate": "2024-01-27",
+            "valueDate": "2024-01-28",
+            "bookingDateTime": "2024-01-27T00:00:00+00:00",
+            "valueDateTime": "2024-01-28T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-20.01",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "TESCO PETROL FILLING STATION FAST",
+            "remittanceInformationUnstructured": "TESCO PETROL 3861 3861T STIRLING",
+            "additionalInformation": "AT240280047000010611605",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "98b9c526347c004f13b691df0aa32881"
+        },
+        {
+            "transactionId": "AT240270042000010617480---0005---20240126",
+            "entryReference": "AT240270042000010617480",
+            "bookingDate": "2024-01-26",
+            "valueDate": "2024-01-27",
+            "bookingDateTime": "2024-01-26T00:00:00+00:00",
+            "valueDateTime": "2024-01-27T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-8.99",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "AMAZON PRIME UK",
+            "remittanceInformationUnstructured": "AMAZON PRIME*5L3P67E45  AMZN.CO.UK/PM",
+            "additionalInformation": "AT240270042000010617480",
+            "merchantCategoryCode": "986",
+            "internalTransactionId": "2224ef669e88622d8fe5b589e02952a3"
+        },
+        {
+            "transactionId": "AT240260052000010549439---0005---20240125",
+            "entryReference": "AT240260052000010549439",
+            "bookingDate": "2024-01-25",
+            "valueDate": "2024-01-26",
+            "bookingDateTime": "2024-01-25T00:00:00+00:00",
+            "valueDateTime": "2024-01-26T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-17.49",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "AMAZON CO UK RETAIL",
+            "remittanceInformationUnstructured": "AMAZON.CO.UK*V972N2S15  AMAZON.CO.UK",
+            "additionalInformation": "AT240260052000010549439",
+            "merchantCategoryCode": "986",
+            "internalTransactionId": "f4b3b6e15d99b03e85d38f5c9b5e15b8"
+        },
+        {
+            "transactionId": "AT240250081000010023874---0005---20240125",
+            "entryReference": "AT240250081000010023874",
+            "bookingDate": "2024-01-25",
+            "valueDate": "2024-01-25",
+            "bookingDateTime": "2024-01-25T00:00:00+00:00",
+            "valueDateTime": "2024-01-25T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-15.06",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "TESCO PETROL FILLING STATION FAST",
+            "remittanceInformationUnstructured": "TESCO PETROL 3861 3861T STIRLING",
+            "additionalInformation": "AT240250081000010023874",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "bf68eaa8f35d7ce96433cbc6aa2bf6b7"
+        },
+        {
+            "transactionId": "AT240230052000010437911---0005---20240123",
+            "entryReference": "AT240230052000010437911",
+            "bookingDate": "2024-01-23",
+            "valueDate": "2024-01-23",
+            "bookingDateTime": "2024-01-23T00:00:00+00:00",
+            "valueDateTime": "2024-01-23T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-15.57",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "TESCO PETROL FILLING STATION FAST",
+            "remittanceInformationUnstructured": "TESCO PETROL 3861 3861T STIRLING",
+            "additionalInformation": "AT240230052000010437911",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "c66eca229346a06b50cbdcc6440a2703"
+        },
+        {
+            "transactionId": "AT240190083000010018783---0005---20240119",
+            "entryReference": "AT240190083000010018783",
+            "bookingDate": "2024-01-19",
+            "valueDate": "2024-01-19",
+            "bookingDateTime": "2024-01-19T00:00:00+00:00",
+            "valueDateTime": "2024-01-19T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-3.3",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240190083000010018783",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "f92420115666590a0043307c4eadc4a6"
+        },
+        {
+            "transactionId": "AT240190083000010018099---0005---20240119",
+            "entryReference": "AT240190083000010018099",
+            "bookingDate": "2024-01-19",
+            "valueDate": "2024-01-19",
+            "bookingDateTime": "2024-01-19T00:00:00+00:00",
+            "valueDateTime": "2024-01-19T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-4.49",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240190083000010018099",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "cefc914c266804900b3402914c3e9f52"
+        },
+        {
+            "transactionId": "AT240190083000010019141---0005---20240119",
+            "entryReference": "AT240190083000010019141",
+            "bookingDate": "2024-01-19",
+            "valueDate": "2024-01-19",
+            "bookingDateTime": "2024-01-19T00:00:00+00:00",
+            "valueDateTime": "2024-01-19T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-5.19",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240190083000010019141",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "eb2c5204ed4b35442982c7408d6d7104"
+        },
+        {
+            "transactionId": "AT240190051000010551021---0005---20240119",
+            "entryReference": "AT240190051000010551021",
+            "bookingDate": "2024-01-19",
+            "valueDate": "2024-01-19",
+            "bookingDateTime": "2024-01-19T00:00:00+00:00",
+            "valueDateTime": "2024-01-19T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-20.52",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "TESCO PETROL FILLING STATION FAST",
+            "remittanceInformationUnstructured": "TESCO PETROL 3861 3861T STIRLING",
+            "additionalInformation": "AT240190051000010551021",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "6e0e9d5610429d833a38650e09e2cc5d"
+        },
+        {
+            "transactionId": "AT240190051000010525447---0005---20240118",
+            "entryReference": "AT240190051000010525447",
+            "bookingDate": "2024-01-18",
+            "valueDate": "2024-01-19",
+            "bookingDateTime": "2024-01-18T00:00:00+00:00",
+            "valueDateTime": "2024-01-19T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-23.98",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "AMAZON MARKETPLACE UK APUK",
+            "remittanceInformationUnstructured": "AMZNMKTPLACE            AMAZON.CO.UK",
+            "additionalInformation": "AT240190051000010525447",
+            "merchantCategoryCode": "986",
+            "internalTransactionId": "cc9d1401420d6dc9d3f042f95946762b"
+        },
+        {
+            "transactionId": "AT240180052000010480924---0005---20240117",
+            "entryReference": "AT240180052000010480924",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-3.29",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240180052000010480924",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "dd473f93170540bbd6ffa84a974cd2ee"
+        },
+        {
+            "transactionId": "AT240180052000010481210---0005---20240117",
+            "entryReference": "AT240180052000010481210",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-3.29",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240180052000010481210",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "bb797a90e6e0c706ada1f5b224638915"
+        },
+        {
+            "transactionId": "AT240180052000010481301---0005---20240117",
+            "entryReference": "AT240180052000010481301",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-3.29",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240180052000010481301",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "9021eb02a09367bdd058ff5a6a22dc5a"
+        },
+        {
+            "transactionId": "AT240180052000010481323---0005---20240117",
+            "entryReference": "AT240180052000010481323",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-4.49",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240180052000010481323",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "7f2cb320e43be88f4f345b8d582ba36c"
+        },
+        {
+            "transactionId": "AT240180052000010468743---0005---20240117",
+            "entryReference": "AT240180052000010468743",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-15.6",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "SAINSBURYS",
+            "remittanceInformationUnstructured": "SAINSBURY'S PETROL FILL STIRLING",
+            "additionalInformation": "AT240180052000010468743",
+            "merchantCategoryCode": "729",
+            "internalTransactionId": "fefb9a47a9156fc356069c08b56d13ca"
+        },
+        {
+            "transactionId": "AT240180052000010532545---0005---20240117",
+            "entryReference": "AT240180052000010532545",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-18",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-18T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-13.09",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "STIRLING INSIDE SAINSBURYS",
+            "remittanceInformationUnstructured": "STIRLING (INSIDE SAINSB STIRLING",
+            "additionalInformation": "AT240180052000010532545",
+            "merchantCategoryCode": "478",
+            "internalTransactionId": "bae6cb23fffae3e5dbba0954abfe1a04"
+        },
+        {
+            "transactionId": "AT240170085000010033515---0005---20240117",
+            "entryReference": "AT240170085000010033515",
+            "bookingDate": "2024-01-17",
+            "valueDate": "2024-01-17",
+            "bookingDateTime": "2024-01-17T00:00:00+00:00",
+            "valueDateTime": "2024-01-17T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-8.1",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "ROYAL MAIL",
+            "remittanceInformationUnstructured": "PAYPAL *ROYAL MAIL      03456113425",
+            "additionalInformation": "AT240170085000010033515",
+            "merchantCategoryCode": "598",
+            "internalTransactionId": "c1759c9782b6751841d4c4bfbc46b014"
+        },
+        {
+            "transactionId": "AT240090051000010439885---0005---20240108",
+            "entryReference": "AT240090051000010439885",
+            "bookingDate": "2024-01-08",
+            "valueDate": "2024-01-09",
+            "bookingDateTime": "2024-01-08T00:00:00+00:00",
+            "valueDateTime": "2024-01-09T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-16.26",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "1.2666"
+            },
+            "creditorName": "PayPal",
+            "remittanceInformationUnstructured": "PAYPAL *LIVEPLAN        8002297526",
+            "additionalInformation": "AT240090051000010439885",
+            "merchantCategoryCode": "677",
+            "internalTransactionId": "9a210032324cb47bca314fa780506820"
+        },
+        {
+            "transactionId": "AT240040051000010506080---0005---20231228",
+            "entryReference": "AT240040051000010506080",
+            "bookingDate": "2023-12-28",
+            "valueDate": "2024-01-04",
+            "bookingDateTime": "2023-12-28T00:00:00+00:00",
+            "valueDateTime": "2024-01-04T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-1.6",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "NAYAX UK",
+            "remittanceInformationUnstructured": "NAYAXAU*EXCEL VENDING L GLASGOW",
+            "additionalInformation": "AT240040051000010506080",
+            "internalTransactionId": "465add005b0eb5435fcd0e6af4cb91cb"
+        },
+        {
+            "transactionId": "AT240030051000010383851---0005---20240103",
+            "entryReference": "AT240030051000010383851",
+            "bookingDate": "2024-01-03",
+            "valueDate": "2024-01-03",
+            "bookingDateTime": "2024-01-03T00:00:00+00:00",
+            "valueDateTime": "2024-01-03T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-11.26",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "TESCO STORES",
+            "remittanceInformationUnstructured": "TESCO STORE 3237 3237TE STIRLING",
+            "additionalInformation": "AT240030051000010383851",
+            "merchantCategoryCode": "019",
+            "internalTransactionId": "a1f2e2f4ab81132fdb01e1d45164c919"
+        },
+        {
+            "transactionId": "AT240030051000010387070---0005---20240102",
+            "entryReference": "AT240030051000010387070",
+            "bookingDate": "2024-01-02",
+            "valueDate": "2024-01-03",
+            "bookingDateTime": "2024-01-02T00:00:00+00:00",
+            "valueDateTime": "2024-01-03T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-14.99",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "WM MORRISONS PETROL UPT",
+            "remittanceInformationUnstructured": "WM MORRISONS PETROL UPT STIRLING",
+            "additionalInformation": "AT240030051000010387070",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "739ee5bded12229c3b83492ba636c781"
+        },
+        {
+            "transactionId": "AT240030051000010387070---0005---20240102",
+            "entryReference": "AT240030051000010387070",
+            "bookingDate": "2024-01-02",
+            "valueDate": "2024-01-03",
+            "bookingDateTime": "2024-01-02T00:00:00+00:00",
+            "valueDateTime": "2024-01-03T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-14.99",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "MORRISONS",
+            "remittanceInformationUnstructured": "WM MORRISONS PETROL UPT STIRLING",
+            "additionalInformation": "AT240030051000010387070",
+            "merchantCategoryCode": "356",
+            "internalTransactionId": "12a6cb985636f1a7084a94e297ec2d19"
+        },
+        {
+            "transactionId": "AT240030051000010386697---0005---20240102",
+            "entryReference": "AT240030051000010386697",
+            "bookingDate": "2024-01-02",
+            "valueDate": "2024-01-03",
+            "bookingDateTime": "2024-01-02T00:00:00+00:00",
+            "valueDateTime": "2024-01-03T00:00:00+00:00",
+            "transactionAmount": {
+                "amount": "-4.5",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "WM MORRISONS STORES",
+            "remittanceInformationUnstructured": "WM MORRISONS STORES     STIRLING",
+            "additionalInformation": "AT240030051000010386697",
+            "merchantCategoryCode": "019",
+            "internalTransactionId": "3c0c59784a42751618c1d4dffb8b7a30"
+        }
+    ],
+    "pending": [
+        {
+            "transactionId": "P0016240820240131031726",
+            "entryReference": "P0016240820240131031726",
+            "bookingDate": "2024-01-31",
+            "bookingDateTime": "2024-01-31T10:17:26Z",
+            "transactionAmount": {
+                "amount": "-6.99",
+                "currency": "GBP"
+            },
+            "currencyExchange": {
+                "sourceCurrency": "GBP",
+                "exchangeRate": "0.0"
+            },
+            "creditorName": "AMAZON MARKETPLACE UK APUK",
+            "remittanceInformationUnstructured": "AMAZON MARKETPLACE UK APUK",
+            "additionalInformation": "P0016240820240131031726",
+            "merchantCategoryCode": "986"
+        }
+    ]
+}

@@ -1,6 +1,9 @@
 import { randomUUID } from "crypto";
 import { setToken } from "./token.js";
-import { cardlessClient } from "../../gocardless.js";
+import { getBankNames } from "./names.js";
+import testData from './data.json' assert{type:'json'}
+import janauryData from './janData.json' assert{type:'json'}
+import { dbPromise } from "../config.js";
 
 
 
@@ -24,8 +27,6 @@ export const generateLink = async(institutionId)=> {
 
 }
 
-
-
 // gets accounnt details for user 
 export const getRequistionAccounts = async(client,requisitionId)=> {
     const {accounts} = await client.requisition.getRequisitionById(requisitionId);
@@ -37,88 +38,135 @@ export const getRequistionAccounts = async(client,requisitionId)=> {
     return accounts[0];
 }
 
-
-export const getAccountTransactions = async (client,accountId,insArray)=> {
-
-    // what if accountId is greater than one 
-    // TODO when case arises.
+// removed parameters client,accountId
+export const getAccountTransactions = async (client,accountId,country)=> {
 
     const account = client.account(accountId);
-    let {transactions} = await account.getTransactions();
+    let { transactions } = await account.getTransactions();
+    const  creditors = await getCreditors(transactions,country);
 
-
-    const recurringExpenses = await detectRecurringExpenses(transactions,insArray)
-    return recurringExpenses
-
-
-    // get .
-    let mostRecentTransactions  =   await account.getTransactions(recentTransactionRange);
-    mostRecentTransactions = await getCreditors(mostRecentTransactions);
-    const recentTransactionRange = getDateRange(new Date(), 1)
+    const recurringExpenses = await recurringPayments(creditors)
+    const mostRecentTransactions = await getCurrentMonthTransactions(creditors)
+    
 
     // remove transactions that exisit in most recent transactions from transactions array. 
-    // const refinedRecentTransaction = mostRecentTransactions.filter(recentTransaction => 
-    //     !transactions.some(transaction => 
-    //         transaction.transactionId === recentTransaction.transactionId))
+    const recentTransactions = mostRecentTransactions.filter(recentTransaction => 
+        !recurringExpenses.some(transaction => 
+            transaction.creditorName === recentTransaction.creditorName))
 
-    
+    return [recurringExpenses, recentTransactions]
 
 }
 
-const getDateRange = async (startDate, monthRange) => {
+
+
+
+const getCreditors = async(transactions, country) => {
+
+        const { booked, pending} = transactions;
+        let transactionArray = [...booked, ...pending]
+        transactionArray = await removeBankPayments(transactionArray,country);
+        const creditors = []; 
+    
+        for(let transactionIndex = 0; transactionIndex < transactionArray.length; transactionIndex++){
+                const transaction = transactionArray[transactionIndex]; 
+                if(!("creditorName" in transaction)) continue
+                    const {bookingDate, transactionAmount,creditorName, merchantCategoryCode} = transaction
+                    const { amount, currency } = transactionAmount
+                    creditors.push({creditorName,bookingDate,merchantCategoryCode,currency,amount})
+        }   
+    
+        return creditors; 
+    
+}
+
+const removeBankPayments = async(transactions,country)=> {
+
+    try{
+        const banks = await getBankNames(country);
+        const bankArray = [];
+
+        banks.forEach(bank=>{
+            bankArray.push((bank.name.toLowerCase()))
+        })
+
+
+        const filteredTransactions = transactions.filter(transaction => {
+            return !bankArray.some(bankname => transaction.creditorName?.toLowerCase().includes(bankname));
+        });
+
+        return  filteredTransactions;
+    }catch(error){
+        throw error.message
+    }
         
-    const previousMonth = new Date(startDate);
-    previousMonth.setMonth(startDate.getMonth() - monthRange);
-    previousMonth.setDate(1);
-
-    const dateFrom = startDate.toISOString().split('T')[0];
-    const dateTo = previousMonth.toISOString().split('T')[0];
-
-    return ({dateFrom,dateTo})
 }
 
-const detectRecurringExpenses = async(transactions)=> {
-    const  creditors = await getCreditors(transactions);
+const recurringPayments = async(transactions)=> {
 
+    const transactionMap = new Map()
 
+    for(let transaction of transactions){
+        const { creditorName, amount, currency , bookingDate, merchantCategoryCode} = transaction;
 
-    // remove banks from payments
-    // const recurrings = creditors.reduce((accumatedTransactions,firstTransaction,index,array ) => {
-    //     for (let index2 = index + 1; index2 < array.length; index2++) {
-    //         const transaction2 = array[index2];
+        const  key = `${creditorName}`;
+
+        if(transactionMap.has(key)){
+            let value = transactionMap.get(key)
+           const isBillingMonthly = await checkBookDate(value.bookingDate, bookingDate);
+           if(!isBillingMonthly) continue
+            value.count += 1 
+        }else{
+            transactionMap.set(key,{creditorName,amount, currency,bookingDate,count:1,merchantCategoryCode})
+        }
+    }
+
     
-    //         if (firstTransaction["creditorName"] === transaction2["creditorName"]) {
-    //             accumatedTransactions.push([firstTransaction, transaction2]);
-    //         }
-    //     }
-    //     return accumatedTransactions;
-    // },[])
+    let recurringTransactions = Array.from(transactionMap.values()).filter(transaction => parseInt(transaction.count) >= 2)
 
-    return creditors;
+
+    return recurringTransactions; 
+
 }
 
-const getCreditors = async(transactions) => {
+const checkBookDate = async(firstDate,secondDate) => {
 
-    const { booked, pending } = transactions
-    const transactionArray = [...booked, ...pending]
-    const creditors = []; 
+    const dateLastMonth = parseInt(firstDate.split('-')[2]);
+    const dateThisMonth = parseInt(secondDate.split('-')[2]);
 
+   const currentDate = new Date(firstDate)
+   const previousDate = new Date(secondDate)
 
-    for(let transactionIndex = 0; transactionIndex < transactionArray.length; transactionIndex++){
-            const transaction = transactionArray[transactionIndex]; 
-            if(("creditorName" in transaction)) creditors.push(transaction)
-    }   
-
-    return creditors; 
+   return(currentDate > previousDate && currentDate.getMonth() !== previousDate.getMonth() && dateLastMonth === dateThisMonth )
 }
 
-// const removeBankPayment = async(transactions)=> {
-//     // get list of banks 
+export const saveRequistion = async(id,userId)=> {
 
-//     const banksArray = 
-// }
+    const db = ( await dbPromise).db();
 
-// get recurring expenses. 
+    await db.collection('requistion').insertOne({id,userId}).then((err)=> {
+            if(!err) return
+    })
+}
+
+
+const getCurrentMonthTransactions = async(transactions)=> {
+
+    // get range of dates from transactions
+        try{
+            const currentDate = new Date()
+            const transasctionsInCurrentMonth = transactions?.filter(transaction => {
+                const transactionDate = new Date(transaction.bookingDate);
+                return transactionDate.getMonth() === currentDate.getMonth();
+            })
+
+            return transasctionsInCurrentMonth
+        }catch(error){
+            throw error.message
+        }
+}
+
+
 
 
 

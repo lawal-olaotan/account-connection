@@ -2,7 +2,7 @@ import { dbPromise } from '../config.js';
 
 export const saveBankNames = async(country,institutions)=> {
 
-
+    
     const db = ( await dbPromise).db();
     const collection = db.collection('banks')
     const collectionCount = await getBankNames(country)
@@ -11,7 +11,7 @@ export const saveBankNames = async(country,institutions)=> {
     const insarray = []
 
     for(let institution of institutions){
-        insarray.push({name:institution.name,country,logo})
+        insarray.push({name:institution.name,country})
     }
 
     if(insarray){
