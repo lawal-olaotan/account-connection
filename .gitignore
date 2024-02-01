@@ -1,3 +1,5 @@
 .env
 node_modules
 req.json
+data.json
+janData.json
