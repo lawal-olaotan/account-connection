@@ -1,8 +1,6 @@
 import { randomUUID } from "crypto";
 import { setToken } from "./token.js";
 import { getBankNames } from "./names.js";
-import testData from './data.json' assert{type:'json'}
-import janauryData from './janData.json' assert{type:'json'}
 import { dbPromise } from "../config.js";
 
 
@@ -140,13 +138,31 @@ const checkBookDate = async(firstDate,secondDate) => {
    return(currentDate > previousDate && currentDate.getMonth() !== previousDate.getMonth() && dateLastMonth === dateThisMonth )
 }
 
-export const saveRequistion = async(id,userId)=> {
+// saves requisition based user Id
+export const saveRequistion = async(id,userId,institutionId)=> {
 
     const db = ( await dbPromise).db();
+    const collection = db.collection('requsition');
 
-    await db.collection('requistion').insertOne({id,userId}).then((err)=> {
+    // Saves user re
+    collection.createIndex({"createdAt":1},{ expireAfterSeconds: 86400 * 90})
+    
+    await collection.insertOne({createdAt:new Date(), id,userId,institutionId}).then((err)=> {
             if(!err) return
     })
+}
+
+export const getRequisitionById = async(userId,institutionId) => {
+    const db = ( await dbPromise).db();
+    const collection = db.collection('requsition');
+
+    const requistion = await collection.findOne(
+      {  $and:[
+        {userId},
+        {institutionId}
+        ]}
+    )
+    return requistion;
 }
 
 

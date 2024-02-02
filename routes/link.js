@@ -4,7 +4,8 @@ import
 { generateLink, 
 getRequistionAccounts,
 getAccountTransactions,
-saveRequistion
+saveRequistion,
+getRequisitionById
 } from '../db/queries/linkAccount.js';
 import {
     setToken
@@ -28,17 +29,9 @@ async(req,res)=> {
         // add transaction days from UI 
         const { id, link } = await generateLink(institutionId, userId); 
 
-        req.session.requistion = id
-
-        req.session.save(async(err)=> {
-            if(err){
-                throw new Error(err.message)
-            }
-            await saveRequistion(id,userId).then(()=> {
-                console.log('saved requsition')
-                res.status(200).json({link})
-            })
-
+        await saveRequistion(id,userId,institutionId).then(()=> {
+            console.log('saved requsition')
+            res.status(200).json({link})
         })
 
     }catch(error){
@@ -49,7 +42,8 @@ async(req,res)=> {
 }])
 
 
-router.get("/",[check('country').isString(),sanitizeInput,
+router.get("/",[check('country').isString(),check('institutionId').isString()
+,check('userId').isString(),sanitizeInput,
 async(req,res)=> {
     try{
         const errors = validationResult(req);
@@ -57,9 +51,9 @@ async(req,res)=> {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
           }
-
-      const id =  req.session.requistion;
-       const { country }= req.query
+    const { country, userId, institutionId }= req.query
+      const {id} =  await getRequisitionById(userId,institutionId);
+       
 
        if(!id){
             return res.status(500).json({message:'session is not defined'})

@@ -58,10 +58,8 @@ export const setToken = async(userId) => {
 } 
 
 const requestNewToken = async(refresh)=> {
-
     const { access } =  await cardlessClient.exchangeToken({refreshToken: refresh});
     return access
-    
 }
 
 export const getInsData = async(client,country) => {
