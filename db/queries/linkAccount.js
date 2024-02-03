@@ -11,7 +11,7 @@ export const generateLink = async(institutionId)=> {
         const client = await setToken()
 
         const data = await client.initSession({
-            redirectUrl:"https://app.joineconome.com/connect/",
+            redirectUrl:"https://app.joineconome.com/connect/detect",
             institutionId:institutionId,
             referenceId:randomUUID(),
             accessValidForDays:30,

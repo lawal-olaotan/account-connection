@@ -11,7 +11,8 @@ export const saveBankNames = async(country,institutions)=> {
     const insarray = []
 
     for(let institution of institutions){
-        insarray.push({name:institution.name,country})
+        const { name, logo, id } = institution
+        insarray.push({name,country,logo,id})
     }
 
     if(insarray){
