@@ -1,33 +1,48 @@
 import { dbPromise } from '../config.js'; 
 
-export const saveBankNames = async(country,institutions)=> {
-
+export const instititionQuery = () => {
     
-    const db = ( await dbPromise).db();
-    const collection = db.collection('banks')
-    const collectionCount = await getBankNames(country)
-    if(collectionCount.length) return;
+    const connect = async()=> {
+        const db =  (await dbPromise).db()
+        const collection = db.collection('banks')
+        return collection
+    }
+    
+    const saveBankNames = async(institutions,country) => {
+        const collection = await connect(); 
 
-    const insarray = []
+        const refinedInstitutions = []
 
-    for(let institution of institutions){
-        const { name, logo, id } = institution
-        insarray.push({name,country,logo,id})
+        for(let institution of institutions){
+            const { name, logo, id, transaction_total_days,
+                bic} = institution
+            refinedInstitutions.push({name,country,logo,id,transaction_total_days,bic})
+        }
+    
+        if(refinedInstitutions){
+            await collection.insertMany(refinedInstitutions).then(err => {
+                if(!err) return 
+            })
+        }
+        
     }
 
-    if(insarray){
-        await collection.insertMany(insarray).then(err => {
-            if(!err) return 
-        })
+    const getBanksInformation = async(country) =>  {
+        const collection = await connect()
+        const cursor = await collection.find({country}).toArray(); 
+        return cursor
     }
 
-   
-    
-} 
+    const getBankById = async(id)=>{
+        const db = await connect()
+        const institutionInformation = await db.findOne({id})
+        return institutionInformation
 
-export const getBankNames = async(country)=> {
-    const db = ( await dbPromise).db();
-    const banksCol = db.collection('banks');
-    const cursor = await banksCol.find({country}).toArray()
-    return cursor
+    }
+
+    return{
+        saveBankNames,
+        getBanksInformation,
+        getBankById
+    }
 }

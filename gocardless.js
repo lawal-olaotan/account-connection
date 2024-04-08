@@ -6,7 +6,6 @@ import NordigenClient from "nordigen-node";
 import dotenv from "dotenv"
 
 
-
 dotenv.config();
 
 // sets gocardless client
