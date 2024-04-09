@@ -51,8 +51,6 @@ app.use((req,res,next)=>{
 app.use('/institutions', institutions)
 app.use('/link', link)
 
-// app.use('/message', handleMessagesapp.use('/schedule', scheduleReminder ))
-
 app.listen(PORT, async()=>{
     console.log(`Server is running on port ${PORT}`);
     try{

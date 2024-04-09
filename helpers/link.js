@@ -20,11 +20,8 @@ export const generateLink = async(institutionId,countryCode,transaction_total_da
 
 }
 
-
 export const getRequistionAccounts = async(client,requisitionId)=> {
     const {accounts} = await client.requisition.getRequisitionById(requisitionId);
-
-    
 
     // if(accounts.length > 1 ){
     //     // check if user is on a premium

@@ -75,43 +75,13 @@ async(req,res)=> {
         const accountsId = await getRequistionAccounts(client,requestId)
         if(!accountsId.length) return null 
         
-        const transactionLength = req.session.transactionLength
+        const transactionLength = req.session.transactionLength;
         const transaction = await getAccountTransactions(client,accountsId,country,transactionLength)
         // encrypt transactions
         await updateRequisitionConnection(requestId,transaction[0]);
         res.status(200).json(transaction)
 
-                // set scheduler to update every 24 hours
-                // check for all requistion regitered to a user
                 
-                // create process for each one and use queues if user account is more than four
-
-                //  CORE PROCESS
-                // check if access days is not execeeded 
-                // if accesdays is due : send email & update requisition as non active
-                
-
-                // UPDATE REQUISTION
-                // when users get new link
-                // create a new endpoint called update
-                // check if requistion is previously saved and check last day of access
-                
-
-                // if no new transactions are found from last day of access 
-                // return no update
-
-                // if there is a transaction update
-                // check if recorded recurring expenses is charged again
-                //  update billing data and time and start tracking usage ()
-
-                // check if new merchants are contained in expenses from last month 
-                // check if it's a free trial period or subscription
-
-                //if freetrial check the days for freetrial , use transaction date to calculate days left and hold in a suggested expenses collections. 
-                
-                // schedule a reminder two days to subscription ending. 
-
-                //  add subscriptions to insights collections
 
 
                     
@@ -122,14 +92,6 @@ async(req,res)=> {
    
 
 }])
-
-// TODO:
-// connecting mutliple accounts at the same time
-// Syncing realtime purchases
-// delete users who don't pay 
-// delete users who unsubcribe 
-
-
 
 
 // TODO implement delete using stripe webhooks when user subscriptions expire
