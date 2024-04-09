@@ -13,9 +13,9 @@ export const saveRefreshToken = async({refresh,access,userId})=> {
         const userPreviousToken = await getRefreshToken(userId);
 
         // checks if tokens and update object 
-        if(userPreviousToken !== null){
+        if(!userPreviousToken){
             await db.collection('linkToken').updateOne(
-                { userId},
+                { userId}, 
                 {$set:{ createdAt:new Date(), access,refresh}}
             ).then(()=> true )
         } 
@@ -62,7 +62,3 @@ const requestNewToken = async(refresh)=> {
     return access
 }
 
-export const getInsData = async(client,country) => {
-    const institutions = await client.institution.getInstitutions({country:country});
-    return institutions;
-}

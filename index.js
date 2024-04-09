@@ -19,20 +19,20 @@ const app = express();
 const PORT = process.env.PORT
     
 // TODO: currently not utilised, need to use session might arise in the future
-// app.use(session({
-//     secret: randomUUID(),
-//     resave: false,
-//     saveUninitialized: false,
-//     store: new MongoStore({
-//         client: dbPromise,
-//         collection:'linkSession',
-//         ttl: 60 * 60,
-//     }),
-//     cookie: {
-//         secure: 'auto',
-//         maxAge: 24 * 60 * 60 * 1000
-//     }
-// }));
+app.use(session({
+    secret: randomUUID(),
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+        client: dbPromise,
+        collection:'linkSession',
+        ttl: 60 * 60,
+    }),
+    cookie: {
+        secure: 'auto',
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
 
 
 app.use(morgan('dev'))

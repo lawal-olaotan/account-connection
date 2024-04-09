@@ -3,10 +3,11 @@
  */
 
 import express from 'express';
-import { setToken,getInsData} from '../db/queries/token.js';
+import { setToken} from '../db/queries/token.js';
 import { sanitizeInput } from '../middleware.js';
 import { validationResult, check} from 'express-validator';
-import { instititionQuery } from '../db/queries/names.js';
+import { instititionQuery } from '../db/queries/instituition.js';
+import {getInsData} from '../helpers/institution.js'
 
 const router = express.Router();
 

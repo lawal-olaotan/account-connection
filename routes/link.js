@@ -1,19 +1,20 @@
 import express from 'express';
 import { sanitizeInput } from '../middleware.js';
 import 
-{ generateLink, 
-getRequistionAccounts,
-getAccountTransactions,
+{
 saveRequistion,
 getRequisitionById,
-removeRequisitionsByUser,
+removeRequisitionsById,
 updateRequisitionConnection
-} from '../db/queries/linkAccount.js';
+} from '../db/queries/requistion.js';
 import {
     setToken
 } from '../db/queries/token.js'
 import { validationResult, check} from 'express-validator';
-import { instititionQuery } from "../db/queries/names.js"
+import { instititionQuery } from "../db/queries/instituition.js"
+import {  generateLink,} from '../helpers/link.js'
+import {  getAccountTransactions  } from '../helpers/transactions.js'
+import { getRequistionAccounts, deleteRequstionById } from '../helpers/link.js'
 
 const router = express.Router();
 
@@ -41,6 +42,7 @@ async(req,res)=> {
 
         const db = instititionQuery()
         const { transaction_total_days } = await db.getBankById(institutionId);
+        req.session.transactionLength = transaction_total_days
 
         // add transaction days from UI 
         const { id, link } = await generateLink(institutionId,countryCode,transaction_total_days); 
@@ -71,9 +73,10 @@ async(req,res)=> {
 
         const client = await setToken()
         const accountsId = await getRequistionAccounts(client,requestId)
-
         if(!accountsId.length) return null 
-        const transaction = await getAccountTransactions(client,accountsId,country)
+        
+        const transactionLength = req.session.transactionLength
+        const transaction = await getAccountTransactions(client,accountsId,country,transactionLength)
         // encrypt transactions
         await updateRequisitionConnection(requestId,transaction[0]);
         res.status(200).json(transaction)
@@ -94,7 +97,7 @@ async(req,res)=> {
                 // check if requistion is previously saved and check last day of access
                 
 
-                // if new transactions are found from last day of access 
+                // if no new transactions are found from last day of access 
                 // return no update
 
                 // if there is a transaction update
@@ -133,13 +136,14 @@ async(req,res)=> {
 router.delete("/", async(req,res)=> {
 
     try{
-        const { userId, requisitionId } = req.body;
-
-        const userRequistions = await removeRequisitionsByUser(userId)
-        res.status(200).json(userRequistions)
-
+        const { id } = req.body;
+        await deleteRequstionById(id).then(async()=> {
+            await removeRequisitionsById(id)
+            res.status(200).json({ok:true})
+        })
+    
     }catch(error){
-        res.status(500).json({error})
+        res.status(500).json({ok:false})
     }
 
 })
