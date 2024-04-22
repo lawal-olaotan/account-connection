@@ -1,5 +1,6 @@
 import { dbPromise } from "../config.js";
-
+import dotenv from "dotenv"
+dotenv.config();
 
 export const updateSubscriptions = async(transactions,postedBy) => {
     const db = ( await dbPromise).db();
@@ -21,34 +22,12 @@ export const updateSubscriptions = async(transactions,postedBy) => {
     })
 }
 
-
 export const saveSubscriptions = async(transactions,postedBy) => {
-    const db = ( await dbPromise).db();
-    const collection = await db.collection('userTrials')
-
     const subscriptions = createSubscriptionObject(transactions,postedBy);
-
-     if(subscriptions.length < 2) {
-        return await collection.insertOne(subscriptions[0])
-     }
-
-     await collection.inserMany(subscriptions)
+    const route = subscriptions.length < 2 ? '/usertrials' : '/subscriptions'
+    const data = subscriptions.length < 2 ? subscriptions[0] : subscriptions
+     await subscriptionApiCall(data,route)
 }
-
-
-// export const saveSubscriptions = async(transactions,postedBy)=>
-// {
-//     try{
-
-        
-        
-
-//     }catch(error){
-//         throw new Error(error.message)
-//     }
-
-// }
-    
 
 const createSubscriptionObject = (transactions,postedBy)=> {
 
@@ -73,7 +52,6 @@ const createSubscriptionObject = (transactions,postedBy)=> {
 
 }
 
-
 const getDates = (bookingDate)=> {
 
     const starts = new Date(bookingDate);
@@ -84,3 +62,22 @@ const getDates = (bookingDate)=> {
 
     return subscriptionDates
 }
+
+export const subscriptionApiCall = async (data,route) => {
+    try {
+        const subscriptionApiUrl = `${process.env.SUBSCRIPTION_API}${route}`
+      const apicall = await fetch(subscriptionApiUrl,
+        {
+          method:'POST',
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const apifetchResponse = await apicall.json();
+      return apifetchResponse;
+    } catch (error) {
+      console.log(`Error ${error}`);
+    }
+};
