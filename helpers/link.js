@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { setToken } from "../db/queries/token.js";
 
-export const generateLink = async(institutionId,countryCode,transaction_total_days)=> {
+export const generateLink = async(institutionId,countryCode = 'GB',transaction_total_days = 90)=> {
 
     const client = await setToken()
     const client_url = process.env.CLIENT_URL
@@ -25,7 +25,7 @@ export const getRequistionAccounts = async(client,requisitionId)=> {
 
     // if(accounts.length > 1 ){
     //     // check if user is on a premium
-    //     console.log('more than one accounts')
+    //     console.log('more than one accounts')getRequisitionById
     // }
 
     return accounts[0];

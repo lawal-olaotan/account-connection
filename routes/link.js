@@ -56,35 +56,28 @@ async(req,res)=> {
         console.log(error)
         res.status(500).json(error.message)
     }
-   
-
 }])
 
 
-router.get("/",[check('country').isString(),check('requestId').isString()
+router.get("/",[check('country').isString(),check('id').isString()
 ,sanitizeInput,
 async(req,res)=> {
     try{
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
-        const { country, requestId } = req.query
-        if(!requestId) return res.status(409).json({message:'session is not defined'})
+        const { country, id } = req.query
+        if(!id) return res.status(409).json({message:'session is not defined'})
 
         const client = await setToken()
-        const accountsId = await getRequistionAccounts(client,requestId)
+        const accountsId = await getRequistionAccounts(client, id)
         if(!accountsId.length) return null 
         
-        const transactionLength = req.session.transactionLength;
+        const transactionLength = "90";
         const transaction = await getAccountTransactions(client,accountsId,country,transactionLength)
         // encrypt transactions
-        await updateRequisitionConnection(requestId,transaction[0]);
-        res.status(200).json(transaction)
-
-                
-
-
-                    
+        await updateRequisitionConnection(id,transaction[0]);
+        res.status(200).json(transaction);
         
     }catch(error){
         res.status(500).json({transaction:error})

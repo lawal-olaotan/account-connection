@@ -3,25 +3,32 @@ import { instititionQuery } from "../db/queries/instituition.js";
  // removed parameters client,accountId
  export const getAccountTransactions = async (client,accountId,country,transactionLength)=> {
 
-    const account = await client.account(accountId);
-    const totalTransactionInNumber = Number(transactionLength);
-    let { transactions } = await account.getTransactions();
-    const  creditors = await getCreditors(transactions,country);
+    
+        const account = await client.account(accountId);
+        const totalTransactionInNumber = Number(transactionLength);
+        let { transactions } = await account.getTransactions();
+        const  creditors = await getCreditors(transactions,country);
 
-    const expenses = await recurringPayments(creditors,totalTransactionInNumber);
-    const mostRecentTransactions = await getCurrentMonthTransactions(creditors,country)
+        const freetrials = await detectFreeTrials(creditors);
+        const expenses = await recurringPayments(creditors,totalTransactionInNumber);
+        const mostRecentTransactions = await getCurrentMonthTransactions(creditors,country)
+        console.log(mostRecentTransactions)
+
+        let detectedExpenses = freetrials.length ? expenses.concat(...freetrials) : expenses
+
+
     
     // remove transactions that exisit in most recent transactions from transactions array. 
-    const recentTransactions = mostRecentTransactions.filter(recentTransaction => 
-        !expenses.some(transaction => 
-            transaction.creditorName === recentTransaction.creditorName))
+        const recentTransactions = mostRecentTransactions.filter(it => 
+            !detectedExpenses.some(transaction => 
+                transaction.creditorName === it.creditorName))
 
-    return [expenses, recentTransactions]
+
+        return [detectedExpenses, recentTransactions]
 
 }
 
-const getCreditors = async(transactions, country) => {
-
+export const getCreditors = async(transactions, country = 'GB') => {
     const { booked, pending} = transactions;
     let transactionArray = [...booked, ...pending]
     transactionArray = await removeBankPayments(transactionArray,country);
@@ -62,9 +69,10 @@ const removeBankPayments = async(transactions,country)=> {
         
 }
 
-const recurringPayments = async(transactions,totalTransactionInNumber)=> {
+export const recurringPayments = async(transactions,totalTransactionInNumber = 90 )=> {
 
     const transactionMap = new Map()
+    let isBillingAnnual;
 
     for(let transaction of transactions){
         const { creditorName, amount, currency , bookingDate, merchantCategoryCode} = transaction;
@@ -74,7 +82,6 @@ const recurringPayments = async(transactions,totalTransactionInNumber)=> {
 
             let value = transactionMap.get(key)
            const isBillingMonthly = await monthlyExpensesCheck(value.bookingDate, bookingDate);
-           let isBillingAnnual; 
 
            if(totalTransactionInNumber > 720){
                 isBillingAnnual =  await calculateAnnualExpenses(value.bookingDate, bookingDate);
@@ -106,16 +113,20 @@ const recurringPayments = async(transactions,totalTransactionInNumber)=> {
 const calculateAnnualExpenses = async(firstDate,secondDate) => {
     const currentDate = new Date(firstDate)
     const previousDate = new Date(secondDate)
- 
-    return(currentDate > previousDate && (currentDate.getFullYear() !== previousDate.getFullYear()) && ( (previousDate.getFullYear()+ 1) === currentDate.getFullYear()))
+    const dateDiffInDays = (currentDate - previousDate)/(1000*3600*24);
+    return( (dateDiffInDays >= 365 && dateDiffInDays <= 370) && ( (previousDate.getFullYear()+ 1) === currentDate.getFullYear()))
 }
 
 // SUBSCRIPTION ALGORITHM
 const monthlyExpensesCheck = async(firstDate,secondDate) => {
     const currentDate = new Date(firstDate)
     const previousDate = new Date(secondDate)
+    const dateDiffInDays = (currentDate - previousDate)/(1000*3600*24);
  
-    return(currentDate > previousDate && (currentDate.getMonth() !== previousDate.getMonth()) && ( (previousDate.getMonth()+ 1) === currentDate.getMonth()))
+    return(
+        (dateDiffInDays >= 30 && dateDiffInDays <= 40) &&
+        (previousDate.getMonth()+ 1) === currentDate.getMonth()
+    )
  }
 
 const getCurrentMonthTransactions = async(transactions,country)=> {
@@ -129,7 +140,6 @@ const getCurrentMonthTransactions = async(transactions,country)=> {
                 return transactionDate.getMonth() === currentDate.getMonth() ;
             })
 
-            // TODO: to be refined with better algrothim
             if(!transasctionsInCurrentMonth.length){
                 transasctionsInCurrentMonth = transactions?.filter(transaction => {
                     const transactionDate = new Date(transaction.bookingDate);
@@ -137,10 +147,36 @@ const getCurrentMonthTransactions = async(transactions,country)=> {
                 })
             }
 
-            const refinedTransactions = removeBankPayments(transasctionsInCurrentMonth,country)
-
+            const refinedTransactions = await removeBankPayments(transasctionsInCurrentMonth,country)
             return refinedTransactions;
+            
         }catch(error){
-            throw error.message
+            console.log(error.message)
         }
 }
+
+// TODO: 
+export const detectFreeTrials = async(creditors) => {
+
+    // Filter out expenses that are zero in value
+    const freeTrials = creditors.filter( creditor => {
+
+        const transactionDate = new Date(creditor.bookingDate)
+        const currentDate = new Date()
+        const difference = (currentDate - transactionDate) /(1000 * 3600 * 24)
+
+        return creditor.amount === "-0.0000" && difference <= 30 
+    })
+
+    // add the freeTrila pro
+    return  freeTrials.map(freeTrial => {
+        return {
+            ...freeTrial,
+            pattern : "freeTrial",
+            count:1
+        }
+    })
+
+}
+
+
