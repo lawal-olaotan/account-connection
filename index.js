@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import morgan  from 'morgan'
 import institutions from './routes/institutions.js'
 import link from './routes/link.js'
+import update from './routes/update.js';
 import dotenv from "dotenv"
 import session from 'express-session';
 import { randomUUID } from "crypto";
@@ -50,6 +51,7 @@ app.use((req,res,next)=>{
 
 app.use('/institutions', institutions)
 app.use('/link', link)
+app.use('/update',update)
 
 app.listen(PORT, async()=>{
     console.log(`Server is running on port ${PORT}`);

@@ -20,7 +20,7 @@ export const saveRequistion = async(id,userId,institutionId,link)=> {
         isConnected:false,
         transactions:[],
         link,
-        active:true
+        lastUpdatedAt:new Date()
     }
     
     await collection.insertOne(requisition).then((err)=> {
@@ -68,33 +68,89 @@ export const removeRequisitionsById = async(id) => {
 }
 
 export const updateRequisitionConnection = async(id,transaction)=> {
-    const db = ( await dbPromise).db();
-    
-    const {value} = await db.collection('requsition').findOneAndUpdate({id},{$set:{isConnected:true,transaction,link:''}}, {
-        returnDocument: "after" 
-    });
-    
-    // update connection usage
-    // update requistion Id
-    // 
+    try{
+        const db = ( await dbPromise).db();
+        await db.collection('requsition').findOneAndUpdate({id},{$set:{isConnected:true,transaction,link:'',lastUpdatedAt:new Date()}}, {
+            returnDocument: "after" 
+        });
+        
+        // await updateConnectionLimit(userId)
+    }catch(error){
+        console.log(error)
+    }
 
+}
 
-    // await updateConnectionLimit(value)
+export const updateReqLastUpdated = async(id) => {
+    
+    try{
+        const db = ( await dbPromise).db();
+        await db.collection('requsition').findOneAndUpdate({id},{$set:{lastUpdatedAt:new Date()}}, {
+            returnDocument: "after" 
+        });
+        
+        // await updateConnectionLimit(userId)
+    }catch(error){
+        console.log(error)
+    }
 }
 
 
-const updateConnectionLimit = async(value)=> {
-    const { userId } = value 
+export const updateExistingTransactions = async(id,transaction)=> {
+    try{
+        const {bookingDate,count,creditorName,pattern} = transaction
+        const db = ( await dbPromise).db();
+        await db.collection('requsition').updateOne(
+            { id },
+            {
+                $set:{
+                    "transaction.$[elem].bookingDate":bookingDate,
+                    "transaction.$[elem].count":count,
+                    "transaction.$[elem].patter":pattern,
+                }
+            },
+            {
+                    arrayFilters:[
+                        {'elem.creditorName': creditorName},
+                    ]
+            }
+        );
+
+    }catch(error){
+        throw new Error(error.message)
+    }
+}
+
+export const insertRequistionTransactions = async(id, transactions)=>{
+    try{
+        const db = ( await dbPromise).db();
+
+        await db.collection('requsition').updateOne(
+        { id },
+            {
+                $push:{transaction:{$each:transactions}}
+            }
+        )
+
+    }catch(error){
+        throw new Error(error.message)
+    }
+        
+}
+
+
+const updateConnectionLimit = async(userId)=> {
     const db = (await dbPromise).db(); 
-    const collection = db.collection('connectionLimits'); 
+    const collection = db.collection('trialLimits'); 
 
-    const {services} = await collection.findOne({userId})
+    const services = await collection.findOne({userId})
+    console.log(services)
 
-    await collection.update({userId},{
-        $set:{
-            "service.used":services.used + 1
-        }
-    })
+    // await collection.update({userId},{
+    //     $set:{
+    //         "service.used":services.used + 1
+    //     }
+    // })
 
     return true;
 }
