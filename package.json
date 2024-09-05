@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": " node index",
-    "start:dev": "nodemon index --watch"
+    "dev": "nodemon index --watch"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/lawal-olaotan/account-connection#readme",
   "dependencies": {
-    "@getbrevo/brevo": "^2.0.0-beta.4",
+    "@getbrevo/brevo": "^1.0.1",
     "@mailchimp/mailchimp_transactional": "^1.0.59",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
@@ -38,6 +38,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
     "nordigen-node": "^1.2.7",
+    "socket.io": "^4.7.5",
+    "socketio": "^1.0.0",
     "twilio": "^4.11.0",
     "validator": "^13.11.0",
     "winston": "^3.8.2"
