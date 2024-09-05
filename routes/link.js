@@ -3,7 +3,7 @@ import { sanitizeInput } from '../middleware.js';
 import 
 {
 saveRequistion,
-getRequisitionById,
+getRequisitionByUser,
 removeRequisitionsById,
 updateRequisitionConnection
 } from '../db/queries/requistion.js';
@@ -11,7 +11,6 @@ import {
     setToken
 } from '../db/queries/token.js'
 import { validationResult, check} from 'express-validator';
-import { instititionQuery } from "../db/queries/instituition.js"
 import {  generateLink,} from '../helpers/link.js'
 import {  getAccountTransactions  } from '../helpers/transactions.js'
 import { getRequistionAccounts, deleteRequstionById } from '../helpers/link.js'
@@ -29,10 +28,12 @@ async(req,res)=> {
           }
 
         const {institutionId, userId, countryCode} = req.body;
- 
+
+        console.log(userId);
+
 
         // checks if institution Id is already saved with userId
-        const isRequistionRegistered = await getRequisitionById(userId,institutionId);
+        const isRequistionRegistered = await getRequisitionByUser(userId,institutionId);
 
         if(isRequistionRegistered){
             const { link } = isRequistionRegistered
@@ -40,12 +41,8 @@ async(req,res)=> {
             return res.status(200).json({link}); 
         } 
 
-        const db = instititionQuery()
-        const { transaction_total_days } = await db.getBankById(institutionId);
-        req.session.transactionLength = transaction_total_days
-
         // add transaction days from UI 
-        const { id, link } = await generateLink(institutionId,countryCode,transaction_total_days); 
+        const { id, link } = await generateLink(institutionId,countryCode,userId); 
 
         await saveRequistion(id,userId,institutionId,link).then(()=> {
             console.log('saved requsition')
@@ -67,23 +64,24 @@ async(req,res)=> {
         if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
         const { country, id } = req.query
+        
         if(!id) return res.status(409).json({message:'session is not defined'})
 
         const client = await setToken()
         const accountsId = await getRequistionAccounts(client, id)
+        // 
         if(!accountsId.length) return null 
         
         const transactionLength = "90";
         const transaction = await getAccountTransactions(client,accountsId,country,transactionLength)
         // encrypt transactions
         await updateRequisitionConnection(id,transaction[0]);
+
         res.status(200).json(transaction);
         
     }catch(error){
         res.status(500).json({transaction:error})
     }
-   
-
 }])
 
 
@@ -98,6 +96,7 @@ router.delete("/", async(req,res)=> {
         })
     
     }catch(error){
+        console.log(error.message)
         res.status(500).json({ok:false})
     }
 

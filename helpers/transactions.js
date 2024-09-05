@@ -5,18 +5,20 @@ import { instititionQuery } from "../db/queries/instituition.js";
 
     
         const account = await client.account(accountId);
+
         const totalTransactionInNumber = Number(transactionLength);
+
         let { transactions } = await account.getTransactions();
+
         const  creditors = await getCreditors(transactions,country);
 
         const freetrials = await detectFreeTrials(creditors);
+
         const expenses = await recurringPayments(creditors,totalTransactionInNumber);
-        const mostRecentTransactions = await getCurrentMonthTransactions(creditors,country)
-        console.log(mostRecentTransactions)
+
+        const mostRecentTransactions = await getCurrentMonthTransactions(creditors,country);
 
         let detectedExpenses = freetrials.length ? expenses.concat(...freetrials) : expenses
-
-
     
     // remove transactions that exisit in most recent transactions from transactions array. 
         const recentTransactions = mostRecentTransactions.filter(it => 
@@ -178,5 +180,8 @@ export const detectFreeTrials = async(creditors) => {
     })
 
 }
+
+
+
 
 

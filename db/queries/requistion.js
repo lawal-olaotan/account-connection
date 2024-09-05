@@ -28,7 +28,7 @@ export const saveRequistion = async(id,userId,institutionId,link)=> {
     })
 }
 
-export const getRequisitionById = async(userId,institutionId) => {
+export const getRequisitionByUser = async(userId,institutionId) => {
     const db = ( await dbPromise).db();
     const collection = db.collection('requsition');
 
@@ -54,9 +54,7 @@ export const getRequisitionsByUser = async(userId) => {
     return requistions;
 }
 /**
- * 
- * @param {*} userId 
- * @param {*} institutionId 
+ * removed requstion using requistion id
  * @returns 
  */
 
@@ -67,20 +65,19 @@ export const removeRequisitionsById = async(id) => {
     return response
 }
 
+
 export const updateRequisitionConnection = async(id,transaction)=> {
     try{
         const db = ( await dbPromise).db();
         await db.collection('requsition').findOneAndUpdate({id},{$set:{isConnected:true,transaction,link:'',lastUpdatedAt:new Date()}}, {
-            returnDocument: "after" 
         });
-        
-        // await updateConnectionLimit(userId)
     }catch(error){
         console.log(error)
     }
 
 }
 
+// function updates requistion last updated date to check if requistion needs to be updated
 export const updateReqLastUpdated = async(id) => {
     
     try{
@@ -88,14 +85,12 @@ export const updateReqLastUpdated = async(id) => {
         await db.collection('requsition').findOneAndUpdate({id},{$set:{lastUpdatedAt:new Date()}}, {
             returnDocument: "after" 
         });
-        
-        // await updateConnectionLimit(userId)
     }catch(error){
         console.log(error)
     }
 }
 
-
+// function updates existing transactions
 export const updateExistingTransactions = async(id,transaction)=> {
     try{
         const {bookingDate,count,creditorName,pattern} = transaction
@@ -121,6 +116,7 @@ export const updateExistingTransactions = async(id,transaction)=> {
     }
 }
 
+// function inserts requistions transactions
 export const insertRequistionTransactions = async(id, transactions)=>{
     try{
         const db = ( await dbPromise).db();
@@ -139,20 +135,12 @@ export const insertRequistionTransactions = async(id, transactions)=>{
 }
 
 
-const updateConnectionLimit = async(userId)=> {
+// // function gets requistion details by requistion id
+export const getRequisitionById = async(id)=> {
     const db = (await dbPromise).db(); 
-    const collection = db.collection('trialLimits'); 
-
-    const services = await collection.findOne({userId})
-    console.log(services)
-
-    // await collection.update({userId},{
-    //     $set:{
-    //         "service.used":services.used + 1
-    //     }
-    // })
-
-    return true;
+    const collection = db.collection('requsition'); 
+    const services = await collection.findOne({id})
+    return services
 }
 
 

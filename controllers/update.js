@@ -1,4 +1,4 @@
-import {getRequisitionById,updateExistingTransactions,insertRequistionTransactions,updateReqLastUpdated} from '../db/queries/requistion.js';
+import {getRequisitionByUser,updateExistingTransactions,insertRequistionTransactions,updateReqLastUpdated} from '../db/queries/requistion.js';
 import { updateSubscriptions, saveSubscriptions } from '../db/queries/subscription.js';
 import { setToken } from '../db/queries/token.js';
 import { utils } from '../helpers/update.js';
@@ -13,7 +13,7 @@ const updateTransactions = async(req,res)=> {
         const {userId,institutionId,id} = req.body;
         const util = utils();
 
-        const requistion = await getRequisitionById(userId,institutionId)
+        const requistion = await getRequisitionByUser(userId,institutionId)
         if(!requistion) return res.status(200).json({ok:"No such requisition"})
         const {createdAt,transaction} = requistion;
         const isRequistionActive = util.checkRequisitionStatus(createdAt);
