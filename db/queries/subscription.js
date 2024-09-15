@@ -2,31 +2,10 @@ import { dbPromise } from "../config.js";
 import dotenv from "dotenv"
 dotenv.config();
 
-export const updateSubscriptions = async(transactions,postedBy) => {
-    const db = ( await dbPromise).db();
-    const collection = await db.collection('userTrials')
-
-    transactions.forEach(async(transaction )=> {
-            const { bookingDate,creditorName} = transaction;
-
-           const { starts,ends} = getDates(bookingDate)
-
-            const name = creditorName.toLowerCase();
-            const filterParam = {$and:[{postedBy,name}]}
-            await collection.updateOne(filterParam,{
-                $set:{
-                    starts,
-                    ends
-                }
-            })
-    })
-}
 
 export const saveSubscriptions = async(transactions,postedBy) => {
     const subscriptions = createSubscriptionObject(transactions,postedBy);
-    const route = subscriptions.length < 2 ? '/usertrials' : '/subscriptions'
-    const data = subscriptions.length < 2 ? subscriptions[0] : subscriptions
-     await subscriptionApiCall(data,route)
+     await subscriptionApiCall(subscriptions,'/subscriptions')
 }
 
 const createSubscriptionObject = (transactions,postedBy)=> {
@@ -35,7 +14,8 @@ const createSubscriptionObject = (transactions,postedBy)=> {
         const { bookingDate, creditorName, pattern, currency, amount} = transaction
         const { starts,ends} = getDates(bookingDate); 
         const name = creditorName.toLowerCase()
-        const serviceType = pattern === 'monthly' ? 'subscription' : 'trial';
+        const subscriptionTypes = ['biannual','annual','monthly' ]
+        const serviceType = subscriptionTypes.includes(pattern)? 'subscription' : 'trial';
         
         return transaction = {
             name,

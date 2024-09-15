@@ -62,3 +62,27 @@ const requestNewToken = async(refresh)=> {
     return access
 }
 
+
+
+export const refreshToken = async(userId) => {
+    // access token
+    const userToken = await getRefreshToken(userId);
+    let accessTokens;
+
+    if(!userToken  || "refresh" in userToken){
+        const { access, refresh } = await cardlessClient.generateToken();
+        accessTokens = access;
+        const tokensData = {
+            refresh,
+            access,
+            userId
+        }
+        saveRefreshToken(tokensData);
+    }else{
+        const {  refresh } = userToken
+        accessTokens= requestNewToken(refresh) 
+    }
+    
+    return accessTokens
+} 
+
