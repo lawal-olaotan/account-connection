@@ -10,7 +10,6 @@ import { setupMobileSocket } from './controllers/mobile-socket.js';
 import http from 'http'
 
 
-
 import { dbPromise } from './db/config.js';
 dotenv.config(); 
 
